@@ -424,7 +424,7 @@ app.get("/", async (req, res) => {
     }
     else {
       community = await data;
-      res.render("index", { pageTitle: pageTitle, cssName: cssName, username, picture, email, community, member });
+      res.render("index", { pageTitle, cssName: cssName, username, picture, email, community, member });
     }
   });
 
@@ -604,7 +604,7 @@ app.get("/blogs", (req, res) => {
     if (err) console.log(err);
     else {
       console.log(data[2].imageurl);
-      res.render("blogs", { data: data, title: pageTitle, cssName: cssName, username, picture, email });
+      res.render("blogs", { data: data, pageTitle, cssName: cssName, username, picture, email });
     }
   });
 });
