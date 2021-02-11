@@ -391,24 +391,24 @@ const secondyearPapers = mongoose.model(
 //   // secondyearVideos1.save();
 // })
 
-app.get("/", async (req, res) => {
+// HOME PAGE 
+app.get("/", (req, res) => {
   let pageTitle = "JSS Connect";
   let cssName = "css/index.css";
   let username = "Guest";
   let email = "";
   let picture = "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png";
   let member = "";
-
   if (req.isAuthenticated()) {
     username = req.user.name;
     picture = req.user.picture;
     email = req.user.email;
-    await communityUser.find({ email: email }, async (err, data) => {
+    communityUser.find({ email: email }, (err, data) => {
       if (err) {
         console.log(err);
       }
       else {
-        await console.log(data);
+        console.log(data);
         if (data != "")
           member = true;
         else
@@ -416,21 +416,19 @@ app.get("/", async (req, res) => {
       }
     });
   }
-
   let community = "";
-  await communityUser.find({}, async (err, data) => {
+  communityUser.find({}, (err, data) => {
     if (err) {
       console.log(err);
     }
     else {
-      community = await data;
-      res.render("index", { pageTitle, cssName: cssName, username, picture, email, community, member });
+      community = data;
+      res.render("index", { pageTitle: pageTitle, cssName: cssName, username, picture, email, community, member });
     }
   });
-
-
 });
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* Contact Page */
 app.get("/contact", (req, res) => {
   let pageTitle = "Contact";
   let cssName = "css/team.css";
@@ -445,10 +443,11 @@ app.get("/contact", (req, res) => {
 
   res.render("contact", { username, picture, email, pageTitle, cssName });
 });
+
+// LOGIN PAGE
 app.get("/login", (req, res) => {
   let pageTitle = "JSS Connect";
   let cssName = "css/login.css";
-
   let username = "Guest";
   let picture = "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"; let email = "";
   if (req.isAuthenticated()) {
@@ -456,9 +455,9 @@ app.get("/login", (req, res) => {
     picture = req.user.picture;
     email = req.user.email;
   }
-
   res.render("login", { pageTitle: pageTitle, cssName: cssName, username, picture, email });
 });
+// REGISTER PAGE
 app.get("/register", (req, res) => {
   let username = "Guest";
   let picture = "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"; let email = "";
@@ -467,18 +466,21 @@ app.get("/register", (req, res) => {
     picture = req.user.picture;
     email = req.user.email;
   }
-
   res.render("register", { username, picture, email });
 });
+// RESOURCE PAGE
 app.get("/resources", (req, res) => {
   let username = "Guest";
+  let cssName = "css/resource.css";
+  let pageTitle = "JSS Connect|Resources";
   let picture = "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"; let email = "";
   if (req.isAuthenticated()) {
     username = req.user.name;
     picture = req.user.picture;
     email = req.user.email;
-  }
-  res.render("resources", { username, picture, email });
+   }
+  res.render("resources", { username, picture, email, pageTitle: pageTitle, cssName: cssName });
+ 
 });
 app.get("/about", (req, res) => {
   let username = "Guest";
@@ -504,6 +506,7 @@ app.get("/privacy", (req, res) => {
   }
   res.render("privacy", { cssName, pageTitle, username, picture, email });
 });
+// CONTRIBUTE RESOURCES PAGE
 app.get("/contribute", async (req, res) => {
   let message = "";
   if (req.query.message != "") {
@@ -531,6 +534,7 @@ app.get("/contribute", async (req, res) => {
   }
 });
 
+// USER CONTRIBUTION SECTION
 app.get("/usercontributions", (req, res) => {
   let username = "Guest";
   let picture = "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"; let email = "";
@@ -541,13 +545,14 @@ app.get("/usercontributions", (req, res) => {
   }
   res.render("usercontributions", { username, picture, email });
 });
+
+// FEEDBACK
 app.get("/feedback", (req, res) => {
   let pageTitle = "Feedback";
   let cssName = "css/index.css";
   let username = "Guest";
   let picture = "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png";
   let email = "";
-
   if (req.isAuthenticated()) {
     username = req.user.name;
     picture = req.user.picture;
@@ -570,7 +575,8 @@ app.get("/dataupload", (req, res) => {
 app.post("/myblog", (req, res) => {
   console.log(req.body.uniqueId);
   let uniId = req.body.uniqueId;
-
+  let pageTitle = "Blogs";
+  let cssName = "css/blogs.css";
   let username = "Guest";
   let picture = "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"; let email = "";
   if (req.isAuthenticated()) {
@@ -578,12 +584,11 @@ app.post("/myblog", (req, res) => {
     picture = req.user.picture;
     email = req.user.email;
   }
-
   userBlog.find({}, (err, data) => {
     if (err) console.log(err);
     else {
       console.log(data[uniId]);
-      res.render("blog", { blogData: data[uniId], username, picture, email });
+      res.render("blog", { blogData: data[uniId], username, picture, email, title: pageTitle, cssName: cssName });
     }
   });
 });
@@ -591,7 +596,6 @@ app.post("/myblog", (req, res) => {
 app.get("/blogs", (req, res) => {
   let pageTitle = "Blogs";
   let cssName = "css/blogs.css";
-
   let username = "Guest";
   let picture = "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"; let email = "";
   if (req.isAuthenticated()) {
@@ -599,12 +603,12 @@ app.get("/blogs", (req, res) => {
     picture = req.user.picture;
     email = req.user.email;
   }
-
+   
   userBlog.find({}, (err, data) => {
     if (err) console.log(err);
     else {
       console.log(data[2].imageurl);
-      res.render("blogs", { data: data, pageTitle, cssName: cssName, username, picture, email });
+      res.render("blogs", { data: data, title: pageTitle, cssName: cssName, username, picture, email });
     }
   });
 });
@@ -794,10 +798,20 @@ app.post("/ucontribute", (req, res) => {
 
 // FirstYear Resources
 app.post("/firstyear", async (req, res) => {
+  let pageTitle = "FirstYear|Resources";
+  let cssName = "css/firstyearresource.css";
+  let username = "Guest";
+  let picture = "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png";
+  let email = "";
   const department = req.body.department;
   const subject = req.body.subject;
   const year = "First Year";
   let books1 = "";
+  if (req.isAuthenticated()) {
+    username = req.user.name;
+    picture = req.user.picture;
+    email = req.user.email;
+  }
   await firstyearBook.find({ subject: subject }, function (err, foundBooks) {
     if (err) {
       console.log(err);
@@ -822,19 +836,33 @@ app.post("/firstyear", async (req, res) => {
     }
   });
   res.render("firstyear", {
+    username: username,
+    email: email,
+    picture: picture,
     year: year,
     Books: books1,
     Notes: notes1,
     Papers: papers1,
+    cssName
   });
 });
 
 // SecondYear Resources
 app.post("/secondyear", async (req, res) => {
+  let pageTitle = "SecondYear|Resources";
+  let cssName = "css/firstyearresource.css";
+  let username = "Guest";
+  let picture = "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png";
+  let email = "";
   const department = req.body.department;
   const subject = req.body.subject;
   const year = "Second Year";
   let books2 = "";
+  if (req.isAuthenticated()) {
+    username = req.user.name;
+    picture = req.user.picture;
+    email = req.user.email;
+  }
   await secondyearBook.find(
     { department: department, subject: subject },
     function (err, foundBooks) {
@@ -864,14 +892,22 @@ app.post("/secondyear", async (req, res) => {
       }
     }
   );
-  res.render("secondyear", { year: year, Books: books2, Notes: notes2, Papers: papers2 });
+  res.render("secondyear",
+    {
+      username: username,
+      email: email,
+      picture: picture,
+      year: year,
+      Books: books2,
+      Notes: notes2,
+      Papers: papers2,
+      cssName
+    });
 });
 
 /* User Contribution Page */
 // FirstYear userResources
 app.post("/ufirstyear", async (req, res) => {
-
-
   const department = req.body.department;
   const subject = req.body.subject;
   let year = "First Year";
@@ -930,6 +966,22 @@ app.post("/usecondyear", async (req, res) => {
   res.render("secondyear", { year: year, Books: books2, Notes: notes2, Papers: papers2 });
 });
 
+/* Course Section */
+// Course Section Landing Page
+app.get("/courselanding", (req, res) => {
+  let pageTitle = "Blogs";
+  let cssName = "css/course/courselanding.css";
+  let username = "Guest";
+  let picture = "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"; let email = "";
+  if (req.isAuthenticated()) {
+    username = req.user.name;
+    picture = req.user.picture;
+    email = req.user.email;
+  }
+  res.render("courselanding", { title: pageTitle, cssName: cssName, username, picture, email });
+   
+ 
+});
 app.listen(port, () => {
   console.log(`Server running at  http://${hostname}:${port}/`);
 });
