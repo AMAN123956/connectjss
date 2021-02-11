@@ -97,7 +97,26 @@
   </div>
 
 
+  <!-- Loading Box -->
+  <div id="loading">
+    <div id="loading-header" style="text-align:center;">
+      <h4 id="quotes"><i class="fa fa-bars" aria-hidden="true"></i> QUOTES|JSSCONNECT</h4>
+      <h3 style="text-align:left;">Always walk through life as if you have something new to learn and you will.</h3>
+      <h2 id="author-name">Aman Dixit</h2>
+      <h6 id="final-word">Final Words________________________<i class="fa fa-play-circle" style="color:orange;margin-left:10px;" aria-hidden="true"></i></h6>
+      
+    
+        <div class="snippet" data-title=".dot-flashing" style="border:none;">
+          <div class="stage" style="border:none;">
+            <div class="dot-flashing" style="border:none;"></div>
+          </div>
+        </div>
+      
+    </div>
+  </div>
 
+  <!-- After-Loading Screen -->
+  <div id="after-loading" style="display:none;">
   <div id="home">
 
     <div id="homeText">
@@ -105,9 +124,9 @@
       <h2 style="font-size: 3.3rem;font-weight: 600;"> <span style="text-align: left;font-size: 3.6rem;">Your station
           for </span>
         <br>
-        <span class="myAnnotation">Notes</span>,
-        <span class="myAnnotation">Blogs</span>,
-        <span class="myAnnotation"> <br> Archives</span>
+        <span>Notes</span>,
+        <span>Blogs</span>,
+        <span> <br> Archives</span>
         <br> and More
       </h2>
 
@@ -202,7 +221,7 @@
   <!-- features sections ends -->
 
 
-  <section style="width: 75%;margin: 0 auto;margin-bottom: 150px;">
+  <section  id="community" style="width: 75%;margin: 0 auto;margin-bottom: 150px;">
     <h1 style="text-align: center;font-size: 2.5rem;">From our community</h1>
     <p style="font-size: 1.5rem;text-align: center;">These people have already joined our
       community,<a style="cursor: pointer;" onclick="modalTrigger();"> Join Now</a>.</p>
@@ -240,7 +259,7 @@
   </p>
 
   <%- include("footer") %>
-
+</div>
     <!-- carausel script -->
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
     <script>
@@ -336,7 +355,21 @@
       if (member == "false") {
         $('#modalJoin').modal('show');
       }
-
+     
+      /* Loading */
+      let loading = document.getElementById("loading");
+      let home = document.getElementById("home");
+      let afterLoading = document.getElementById("after-loading");
+      let topMenu = document.getElementById("topMenu");
+      topMenu.style.display="none";
+      setTimeout(()=>{
+        loading.style.display="none";
+        home.classList.add('magictime', 'swap'); 
+        home.style.display="flex";
+        afterLoading.style.display="block";
+        topMenu.style.display="flex";
+        topMenu.classList.add('magictime', 'swap'); 
+     },3000); 
     </script>
     </body>
 
