@@ -9,12 +9,7 @@
 
 <h3 style="text-align:center;color:yellow;font-size:1.8rem;">One Destination for meeting all your educational needs realted to college study.</h3>
 <p style="text-align:center;font-size:1.5rem;">Jss Connect is an e-platform for helping engineering students in their academics.</p>
-
-
 <img src="1.png" style="margin-top:30px;" alt="image">
-<h2>Dashboard for managing User's Acccount</h2>
-<img src="Screenshot (59).png" style="margin-top:30px;" alt="image">
-<h2></h2>
 <h1 style="margin-top:40px;">Features</h1>
 <h2>Jss Connect is an e-platform for helping engineering students in their academics.
 Engineering students can</h2>
